@@ -14,11 +14,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             })
             res.json(note)
         } catch (error) {
-            console.log(error);
+            res.status(500).json(error)
+            console.log(error)
         }
-    }
-
-    if (req.method === 'PUT') {
+    } else if (req.method === 'PUT') {
         try {
             const note = await prisma.note.update({
                 where: {
@@ -28,7 +27,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             })
             res.json(note)
         } catch (error) {
-            console.log(error);
+            res.status(500).json(error)
+            console.log(error)
         }
+    } else {
+        res.status(405).json({
+            message: 'Method not allowed'
+        })
     }
 }
