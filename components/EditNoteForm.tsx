@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Dispatch, SetStateAction } from 'react'
 
 interface Props {
     id: string
     title: string
     content: string
     refreshData: () => void
-    setEditForm: (editForm: boolean) => boolean
+    setEditForm: Dispatch<SetStateAction<boolean>>
 }
 
 const EditNoteForm = ({ id, title, content, refreshData, setEditForm }: Props) => {

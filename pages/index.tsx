@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { NextPage, GetServerSideProps } from 'next'
+import type { NextPage, GetServerSideProps, NextPageContext } from 'next'
 import { useRouter } from 'next/router'
 import { prisma } from 'lib/prisma'
 import NoteItem, { Note } from 'components/NoteItem';
@@ -8,11 +8,11 @@ import Image from 'next/image'
 import { format } from 'path'
 import styles from '../styles/Home.module.css'
 
-interface Notes {
+interface Props {
 	notes: Note[]
 }
 
-const Home: NextPage = ({ notes }: Notes) => {
+const Home: NextPage = ({ notes }: Props) => {
 	const [form, setForm] = useState<Note>({
 		id: '',
 		title: '',
