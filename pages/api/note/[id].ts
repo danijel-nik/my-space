@@ -17,4 +17,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             console.log(error);
         }
     }
+
+    if (req.method === 'PUT') {
+        try {
+            const note = await prisma.note.update({
+                where: {
+                    id: Number(noteId)
+                },
+                data: req.body
+            })
+            res.json(note)
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }

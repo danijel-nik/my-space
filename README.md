@@ -38,5 +38,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 - `npx prisma init` to initialize prisma in project
 - `npx prisma db push` to execute schema.prisma
-- `npx prisma generate` to use prisma client in code
+- `npx prisma generate` to use prisma client in code. Whenever you make changes to your Prisma schema in the future, you manually need to invoke prisma generate in order to accommodate the changes in your Prisma Client API.
 - `npx prisma studio` to run prisma studio
