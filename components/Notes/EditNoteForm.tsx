@@ -25,7 +25,7 @@ const EditNoteForm = ({ id, title, content, refreshData, setEditForm }: Props) =
 
     const editNote = (noteId: string) => {
         try {
-            fetch(`/api/notes/${id}`, {
+            fetch(`/api/notes/${noteId}`, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
