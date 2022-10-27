@@ -15,7 +15,7 @@ const NoteItem = ({ note, refreshData }: Props) => {
 
     const deleteNote = async (id: string) => {
         try {
-            fetch(`/api/note/${id}`, {
+            fetch(`/api/notes/${id}`, {
                 headers: {
                     'Content-Type': 'application/json'
                 },

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { NextPage, GetServerSideProps, NextPageContext } from 'next'
 import { useRouter } from 'next/router'
 import { prisma } from 'lib/prisma'
-import NoteItem from 'components/NoteItem'
+import NoteItem from 'components/Notes/NoteItem'
 import { Note, NoteCategory } from 'types'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -29,7 +29,7 @@ const Home = ({ notes, categories }: Props) => {
 
 	const createNote = async (data: Note) => {
 		try {
-			fetch('/api/create', {
+			fetch('/api/notes/create', {
 				body: JSON.stringify(data),
 				headers: {
 					'Content-Type': 'application/json'

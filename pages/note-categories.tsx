@@ -20,7 +20,7 @@ const NoteCategories = ({ noteCategories }: Props) => {
         // console.log(data)
         // return
 		try {
-			fetch('/api/category/create', {
+			fetch('/api/notes/category/create', {
 				body: JSON.stringify(data),
 				headers: {
 					'Content-Type': 'application/json'
