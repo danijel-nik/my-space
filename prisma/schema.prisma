@@ -1,5 +1,7 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
+// https://www.prisma.io/docs/concepts/components/prisma-schema/relations
+// https://www.prisma.io/docs/concepts/components/prisma-schema/relations#relation-fields
 
 generator client {
   provider = "prisma-client-js"
@@ -11,9 +13,16 @@ datasource db {
 }
 
 model Note {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int            @id @default(autoincrement())
+  title      String
+  content    String
+  categories NoteCategory[]
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+}
+
+model NoteCategory {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  notes Note[]
 }

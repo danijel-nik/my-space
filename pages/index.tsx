@@ -2,21 +2,24 @@ import { useState } from 'react'
 import type { NextPage, GetServerSideProps, NextPageContext } from 'next'
 import { useRouter } from 'next/router'
 import { prisma } from 'lib/prisma'
-import NoteItem, { Note } from 'components/NoteItem';
+import NoteItem from 'components/NoteItem'
+import { Note, NoteCategory } from 'types'
 import Head from 'next/head'
 import Image from 'next/image'
 import { format } from 'path'
 import styles from '../styles/Home.module.css'
 
-interface Props {
+export interface Props {
 	notes: Note[]
+	categories: NoteCategory[]
 }
 
-const Home: NextPage = ({ notes }: Props) => {
+const Home = ({ notes, categories }: Props) => {
 	const [form, setForm] = useState<Note>({
 		id: '',
 		title: '',
-		content: ''
+		content: '',
+		categoryID: ''
 	})
 	const router = useRouter()
 
@@ -33,7 +36,7 @@ const Home: NextPage = ({ notes }: Props) => {
 				},
 				method: 'POST'
 			}).then(() => {
-				setForm({ id: '', title: '', content: '' })
+				setForm({ id: '', title: '', content: '', categoryID: '' })
 				refreshData()
 			})
 		} catch (error) {
@@ -50,17 +53,26 @@ const Home: NextPage = ({ notes }: Props) => {
 	}
 
 	return (
-		<div className="p-4">
+		<>
 			<h1 className="text-2xl font-bold text-center mb-4">
 				Notes
 			</h1>
 			<form
-				className="w-auto min-w-[100%] max-w-min mx-auto space-y-6 flex flex-col items-stretch mb-20 md:min-w-[50%] 2xl:min-w-[25%]"
+				className="w-[100%] mx-auto space-y-6 flex flex-col items-stretch mb-20 md:w-[50%]"
 				onSubmit={e => {
 					e.preventDefault()
 					handleSubmit(form)
 				}}
 			>
+				<select
+					className="border-2 rounded border-gray-600 p-1 cursor-pointer"
+					onChange={e => setForm({ ...form, categoryID: e.target.value })}
+					>
+					<option value="">Select category</option>
+					{categories?.map((cat) => (
+						<option key={cat.id} value={cat.id}>{cat.name}</option>
+					))}
+				</select>
 				<input
 					type="text"
 					placeholder="Title"
@@ -82,14 +94,14 @@ const Home: NextPage = ({ notes }: Props) => {
 					Add +
 				</button>
 			</form>
-			<div className="w-auto min-w-[100%] max-w-min mx-auto space-y-6 flex flex-col items-stretch mt-0 md:min-w-[50%] 2xl:min-w-[25%]">
+			<div className="w-auto mx-auto space-y-6 flex flex-col items-stretch mt-0 md:w-[50%]">
 				<ul>
 					{notes.map(note => (
 						<NoteItem key={note.id} note={note} refreshData={refreshData} />
 					))}
 				</ul>
 			</div>
-		</div>
+		</>
 	)
 }
 
@@ -97,6 +109,9 @@ export default Home
 
 export const getServerSideProps: GetServerSideProps = async () => {
 	const notesData = await prisma.note.findMany({
+		include: {
+			categories: true
+		}
 		/*
 		select: {
 			id: true,
@@ -105,6 +120,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 		}
 		*/
 	})
+	const categoriesData = await prisma.noteCategory.findMany()
 
 	const notes = notesData.map(note => ({
 		...note,
@@ -114,7 +130,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 	return {
 		props: {
-			notes
+			notes,
+			categories: categoriesData
 		}
 	}
 }

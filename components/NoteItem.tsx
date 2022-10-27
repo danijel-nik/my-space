@@ -1,13 +1,7 @@
 import { useState } from 'react'
 import EditNoteForm from './EditNoteForm'
+import { Note } from 'types';
 
-export interface Note {
-    id: string
-    title: string
-    content: string
-    createdAt?: string
-    updatedAt?: string
-}
 
 interface Props {
     note: Note
