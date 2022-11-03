@@ -1,9 +1,10 @@
 {
-  "name": "notes",
+  "name": "my-space",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "db": "cd _docker && docker-compose up",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -13,7 +14,8 @@
     "next": "12.3.1",
     "prisma": "^4.4.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-icons": "^4.6.0"
   },
   "devDependencies": {
     "@types/node": "18.7.23",

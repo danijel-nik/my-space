@@ -45,7 +45,7 @@ const NoteCategories = ({ noteCategories }: Props) => {
 
     return (
         <>
-            <h1 className="text-2xl font-bold text-center mb-4">
+            <h1 className="text-2xl font-bold mb-4">
                 Note Categories
             </h1>
             <form
