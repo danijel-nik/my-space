@@ -1,4 +1,5 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react'
+import Button from 'components/global/Button'
 
 interface Props {
     id: string
@@ -68,15 +69,18 @@ const EditNoteForm = ({ id, title, content, refreshData, setEditForm }: Props) =
             ></textarea>
 
             <div className="flex flex-row gap-2">
-                <button
+                <Button
+                    className="flex-grow"
                     type="submit"
-                    className="bg-blue-500 hover:bg-blue-600 transition-colors text-white rounded p-1 flex-grow">
+                >
                     Edit
-                </button>
-                <button
-                    className="bg-blue-500 hover:bg-blue-600 transition-colors text-white rounded p-1 flex-grow">
+                </Button>
+                <Button
+                    className="flex-grow"
+                    onClick={() => setEditForm(false)}
+                >
                     Cancel
-                </button>
+                </Button>
             </div>
         </form>
     );

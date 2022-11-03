@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { NextPage, GetServerSideProps, NextPageContext } from 'next'
 import { useRouter } from 'next/router'
 import { prisma } from 'lib/prisma'
+import Button from 'components/global/Button'
 import NoteItem from 'components/Notes/NoteItem'
 import { Note, NoteCategory } from 'types'
 import Head from 'next/head'
@@ -67,7 +68,8 @@ const Home = ({ notes, categories }: Props) => {
 				<select
 					className="border-2 rounded border-gray-600 p-1 cursor-pointer"
 					onChange={e => setForm({ ...form, categoryID: e.target.value })}
-					>
+					value={form.categoryID}
+				>
 					<option value="">Select category</option>
 					{categories?.map((cat) => (
 						<option key={cat.id} value={cat.id}>{cat.name}</option>
@@ -88,11 +90,11 @@ const Home = ({ notes, categories }: Props) => {
 					className="border-2 rounded border-gray-600 p-1"
 				></textarea>
 
-				<button
+				<Button
 					type="submit"
-					className="bg-blue-500 hover:bg-blue-600 transition-colors text-white rounded p-1">
+				>
 					Add +
-				</button>
+				</Button>
 			</form>
 			<div className="w-auto mx-auto space-y-6 flex flex-col items-stretch mt-0 md:w-[50%]">
 				<ul>

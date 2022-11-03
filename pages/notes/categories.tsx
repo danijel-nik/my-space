@@ -2,23 +2,22 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import type { NextPage, GetServerSideProps, NextPageContext } from 'next'
 import { NoteCategory } from 'types'
+import Button from 'components/global/Button'
 
 
 interface Props {
-    noteCategories: NoteCategory[]
+	noteCategories: NoteCategory[]
 }
 
 const NoteCategories = ({ noteCategories }: Props) => {
-    const router = useRouter()
-    const [categoryName, setCategoryName] = useState<string>('')
+	const router = useRouter()
+	const [categoryName, setCategoryName] = useState<string>('')
 
-    const refreshData = () => {
+	const refreshData = () => {
 		router.replace(router.asPath)
 	}
 
-    const createCategory = async (data: {name: string}) => {
-        // console.log(data)
-        // return
+	const createCategory = async (data: { name: string }) => {
 		try {
 			fetch('/api/notes/category/create', {
 				body: JSON.stringify(data),
@@ -34,21 +33,21 @@ const NoteCategories = ({ noteCategories }: Props) => {
 			console.log(error)
 		}
 	}
-    
-    const handleSubmit = async () => {
-        try {
+
+	const handleSubmit = async () => {
+		try {
 			createCategory({ name: categoryName })
 		} catch (error) {
 			console.log(error)
 		}
-    }
+	}
 
-    return (
-        <>
-            <h1 className="text-2xl font-bold mb-4">
-                Note Categories
-            </h1>
-            <form
+	return (
+		<>
+			<h1 className="text-2xl font-bold mb-4">
+				Note Categories
+			</h1>
+			<form
 				className="w-[100%] mx-auto space-y-6 flex flex-col items-stretch mb-20 md:w-[50%]"
 				onSubmit={e => {
 					e.preventDefault()
@@ -63,14 +62,14 @@ const NoteCategories = ({ noteCategories }: Props) => {
 					className="border-2 rounded border-gray-600 p-1"
 				/>
 
-				<button
+				<Button
 					type="submit"
-					className="bg-blue-500 hover:bg-blue-600 transition-colors text-white rounded p-1">
+				>
 					Add +
-				</button>
+				</Button>
 			</form>
-        </>
-    )
+		</>
+	)
 }
 
 export default NoteCategories
