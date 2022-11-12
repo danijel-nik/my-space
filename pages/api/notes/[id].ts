@@ -1,7 +1,45 @@
-import { prisma } from '../../../lib/prisma'
+import { prisma } from 'lib-server/prisma'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { apiHandler } from 'lib-server/nc'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+const handler = apiHandler()
+
+handler.delete(
+    async (req: NextApiRequest, res: NextApiResponse) => {
+        const noteId = req.query.id
+        try {
+            const note = await prisma.note.delete({
+                where: {
+                    id: Number(noteId)
+                }
+            })
+            res.json(note)
+        } catch (error) {
+            res.status(500).json(error)
+            console.log(error)
+        }
+    }
+)
+
+handler.put(
+    async (req: NextApiRequest, res: NextApiResponse) => {
+        const noteId = req.query.id
+        try {
+            const note = await prisma.note.update({
+                where: {
+                    id: Number(noteId)
+                },
+                data: req.body
+            })
+            res.json(note)
+        } catch (error) {
+            res.status(500).json(error)
+            console.log(error)
+        }
+    }
+)
+/*
+async (req: NextApiRequest, res: NextApiResponse) => {
     const noteId = req.query.id
 
     if (req.method === 'DELETE') {
@@ -36,3 +74,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
     }
 }
+*/
+
+export default  handler

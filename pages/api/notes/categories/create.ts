@@ -6,23 +6,16 @@ const handler = apiHandler()
 
 handler.post(
     async (req: NextApiRequest, res: NextApiResponse) => {
-        const { title, content, categoryID } = req.body
-    
+        const { name } = req.body
         try {
-            await prisma.note.create({
+            await prisma.noteCategory.create({
                 data: {
-                    title,
-                    content,
-                    categories: {
-                        connect: {
-                            id: parseInt(categoryID)
-                        }
-                    }
+                    name
                 }
             })
-            res.status(200).json({ message: 'Note Created' })
+            res.status(200).json({ message: 'Note Category was successfully created' })
         } catch (error) {
-            console.log("Failure")
+            console.log("Failure", error)
             res.status(500).json({ message: error })
         }
     }

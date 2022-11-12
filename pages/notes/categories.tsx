@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import type { NextPage, GetServerSideProps, NextPageContext } from 'next'
 import { NoteCategory } from 'types'
 import Button from 'components/global/Button'
+import { useNoteCategories } from 'lib-client/react-query/notes/noteCategories'
 
 
 interface Props {
@@ -12,6 +12,7 @@ interface Props {
 const NoteCategories = ({ noteCategories }: Props) => {
 	const router = useRouter()
 	const [categoryName, setCategoryName] = useState<string>('')
+	const { data, isLoading, isError } = useNoteCategories()
 
 	const refreshData = () => {
 		router.replace(router.asPath)
@@ -19,7 +20,7 @@ const NoteCategories = ({ noteCategories }: Props) => {
 
 	const createCategory = async (data: { name: string }) => {
 		try {
-			fetch('/api/notes/category/create', {
+			fetch('/api/notes/categories/create', {
 				body: JSON.stringify(data),
 				headers: {
 					'Content-Type': 'application/json'
@@ -68,6 +69,7 @@ const NoteCategories = ({ noteCategories }: Props) => {
 					Add +
 				</Button>
 			</form>
+			{data?.categories.map((item: NoteCategory) => <div key={item.id}>{item.name}</div>)}
 		</>
 	)
 }

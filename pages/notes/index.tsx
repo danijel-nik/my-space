@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { NextPage, GetServerSideProps, NextPageContext } from 'next'
 import { useRouter } from 'next/router'
-import { prisma } from 'lib/prisma'
+import { prisma } from 'lib-server/prisma'
 import Loader from 'components/global/Loader'
 import Button from 'components/global/Button'
 import Modal from 'components/global/Modal'
