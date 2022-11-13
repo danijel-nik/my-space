@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { NoteCategory } from 'types'
 import Button from 'components/global/Button'
-import { useNoteCategories, useCreateNoteCategory } from 'lib-client/react-query/notes/noteCategories'
+import {
+	useNoteCategories,
+	useCreateNoteCategory
+} from 'lib-client/react-query/notes/noteCategories'
+import NoteCategoryItem from 'components/Notes/NoteCategoryItem'
 
 
-interface Props {
-	noteCategories: NoteCategory[]
-}
-
-const NoteCategories = ({ noteCategories }: Props) => {
+const NoteCategories = () => {
 	const router = useRouter()
 	const [categoryName, setCategoryName] = useState<string>('')
 	const { data, isLoading, isError } = useNoteCategories()
@@ -17,6 +17,7 @@ const NoteCategories = ({ noteCategories }: Props) => {
 
 	const handleSubmit = async () => {
 		createNoteCategory({ name: categoryName })
+		setCategoryName('')
 	}
 
 	return (
@@ -25,7 +26,7 @@ const NoteCategories = ({ noteCategories }: Props) => {
 				Note Categories
 			</h1>
 			<form
-				className="w-[100%] mx-auto space-y-6 flex flex-col items-stretch mb-20 md:w-[50%]"
+				className="w-[100%] max-w-xl mx-auto space-y-6 flex flex-col items-stretch mb-20"
 				onSubmit={e => {
 					e.preventDefault()
 					handleSubmit()
@@ -45,7 +46,9 @@ const NoteCategories = ({ noteCategories }: Props) => {
 					Add +
 				</Button>
 			</form>
-			{data?.categories.map((item: NoteCategory) => <div key={item.id}>{item.name}</div>)}
+			{data?.categories.map((item: NoteCategory) =>
+				<NoteCategoryItem key={item.id} noteCategory={item} />
+			)}
 		</>
 	)
 }
