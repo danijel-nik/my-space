@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { NoteCategory } from 'types'
 import Button from 'components/global/Button'
-import { useNoteCategories } from 'lib-client/react-query/notes/noteCategories'
+import { useNoteCategories, useCreateNoteCategory } from 'lib-client/react-query/notes/noteCategories'
 
 
 interface Props {
@@ -13,34 +13,10 @@ const NoteCategories = ({ noteCategories }: Props) => {
 	const router = useRouter()
 	const [categoryName, setCategoryName] = useState<string>('')
 	const { data, isLoading, isError } = useNoteCategories()
-
-	const refreshData = () => {
-		router.replace(router.asPath)
-	}
-
-	const createCategory = async (data: { name: string }) => {
-		try {
-			fetch('/api/notes/categories/create', {
-				body: JSON.stringify(data),
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				method: 'POST'
-			}).then(() => {
-				setCategoryName('')
-				refreshData()
-			})
-		} catch (error) {
-			console.log(error)
-		}
-	}
+	const { mutate: createNoteCategory } = useCreateNoteCategory()
 
 	const handleSubmit = async () => {
-		try {
-			createCategory({ name: categoryName })
-		} catch (error) {
-			console.log(error)
-		}
+		createNoteCategory({ name: categoryName })
 	}
 
 	return (

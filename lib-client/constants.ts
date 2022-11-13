@@ -6,6 +6,7 @@ export const Routes = {
 	},
 	API: {
 		NOTES: '/api/notes/',
-		NOTE_CATEGORIES: '/api/notes/categories'
+		NOTE_CATEGORIES: '/api/notes/categories',
+		NOTE_CATEGORIES_CREATION: '/api/notes/categories/create'
 	}
 } as const
