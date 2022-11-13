@@ -10,7 +10,7 @@ const Header = () => {
         <div className="fixed top-0 left-0 right-0 py-3 bg-gray-900 text-white">
             <div className="flex items-center justify-between w-[100%] px-[20px]">
                 <h2 className="font-bold text-2xl">
-                    <Link href="/" shallow>Notes'n'Stuff</Link>
+                    <Link href="/" shallow>Notes & Stuff</Link>
                 </h2>
                 <nav>
                     <ul className="list-none flex font-semibold">
