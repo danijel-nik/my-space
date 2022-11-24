@@ -8,16 +8,20 @@ import Modal from 'components/global/Modal'
 import NewNoteForm from 'components/Notes/NewNoteForm'
 import NoteItem from 'components/Notes/NoteItem'
 import { Note, NoteCategory } from 'types'
+import { useNotes } from 'lib-client/react-query/notes'
+import { useNoteCategories } from 'lib-client/react-query/notes/noteCategories'
 import { format } from 'path'
 
 export interface Props {
-	notes: Note[]
-	categories: NoteCategory[]
+	notes?: Note[]
+	categories?: NoteCategory[]
 }
 
-const Home = ({ notes, categories }: Props) => {
+const Home = ({ }: Props) => {
 	const [modalOpen, setModalOpen] = useState(false)
 	const router = useRouter()
+	const noteQuery = useNotes()
+	const noteCategoriesQuery = useNoteCategories(false)
 
 	const refreshData = () => {
 		router.replace(router.asPath)
@@ -32,11 +36,11 @@ const Home = ({ notes, categories }: Props) => {
 				<Button onClick={() => setModalOpen(true)}>Create New Note</Button>
 			</div>
 
-			<NewNoteForm categories={categories} refreshData={refreshData} open={modalOpen} setOpen={setModalOpen} />
+			<NewNoteForm categories={noteCategoriesQuery.data?.categories} open={modalOpen} setOpen={setModalOpen} />
 			
 			<div className="w-auto space-y-6 flex flex-col items-stretch mt-0 md:w-[50%]">
 				<ul>
-					{notes.map(note => (
+					{noteQuery.data?.notes.map((note: Note) => (
 						<NoteItem key={note.id} note={note} refreshData={refreshData} />
 					))}
 				</ul>

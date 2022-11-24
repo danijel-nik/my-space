@@ -3,15 +3,15 @@ import { Note, NoteCategory } from 'types'
 import { useRouter } from 'next/router'
 import Button from 'components/global/Button'
 import Modal from 'components/global/Modal'
+import { useCreateNote } from 'lib-client/react-query/notes'
 
 export interface Props {
     categories: NoteCategory[]
-    refreshData: () => void
     open: boolean
     setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const NewNoteForm = ({ categories, refreshData, open, setOpen }: Props) => {
+const NewNoteForm = ({ categories, open, setOpen }: Props) => {
     const [form, setForm] = useState<Note>({
         id: '',
         title: '',
@@ -19,29 +19,13 @@ const NewNoteForm = ({ categories, refreshData, open, setOpen }: Props) => {
         categoryID: ''
     })
 
-    const createNote = async (data: Note) => {
-        try {
-            fetch('/api/notes/create', {
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                method: 'POST'
-            }).then((resp) => {
-                if (resp.status === 200) {
-                    setForm({ id: '', title: '', content: '', categoryID: '' })
-                    setOpen(false)
-                    refreshData()
-                }
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const { mutate: createNote } = useCreateNote()
 
     const handleSubmit = async (data: Note) => {
         try {
-            createNote(data);
+            await createNote(data);
+            setForm({ id: '', title: '', content: '', categoryID: '' })
+            setOpen(false)
         } catch (error) {
             console.log(error);
         }
