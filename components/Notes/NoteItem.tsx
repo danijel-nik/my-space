@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import EditNoteForm from './EditNoteForm'
 import { Note } from 'types';
+import { useDeleteNote } from 'lib-client/react-query/notes'
 
 
 interface Props {
@@ -11,26 +12,13 @@ interface Props {
 const NoteItem = ({ note, refreshData }: Props) => {
 
     const [editForm, setEditForm] = useState<boolean>(false)
-
-
-    const deleteNote = async (id: string) => {
-        try {
-            fetch(`/api/notes/${id}`, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                method: 'DELETE'
-            }).then(() => refreshData())
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const { mutate: deleteNote } = useDeleteNote()
 
     return (
         <li className="border-b border-gray-600 p-2">
             <div className="flex justify-between">
                 <div className="flex-1 pr-2">
-                    {editForm ? <EditNoteForm id={note.id} title={note.title} content={note.content} refreshData={refreshData} setEditForm={setEditForm} /> : (
+                    {editForm ? <EditNoteForm id={note.id} title={note.title} content={note.content} categoryID={note.categoryID} refreshData={refreshData} setEditForm={setEditForm} /> : (
                         <>
                             <h3 className="font-bold">{note.title}</h3>
                             <p className="text-sm mb-1">{note.content}</p>

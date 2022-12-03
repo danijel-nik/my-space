@@ -28,3 +28,35 @@ export const useCreateNote = () => {
     })
     return mutation
 }
+
+// Edit
+const editNote = async (note: Note) => {
+    const { data } = await axios.put(`${Routes.API.NOTES}/${note.id}`, note)
+    return data
+}
+
+export const useEditNote = () => {
+    const queryClient = useQueryClient()
+    const mutation = useMutation((note: Note) => editNote(note), {
+        onSuccess: async () => {
+            queryClient.invalidateQueries(['get-notes'])
+        }
+    })
+    return mutation
+}
+
+// Delete
+const deleteNote = async (id: string) => {
+    const { data } = await axios.delete(`${Routes.API.NOTES}/${id}`)
+    return data
+}
+
+export const useDeleteNote = () => {
+    const queryClient = useQueryClient()
+    const mutation = useMutation((noteId: string) => deleteNote(noteId), {
+        onSuccess: async () => {
+            queryClient.invalidateQueries(['get-notes'])
+        }
+    })
+    return mutation
+}

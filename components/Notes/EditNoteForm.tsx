@@ -1,18 +1,21 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import Button from 'components/global/Button'
+import { useEditNote } from 'lib-client/react-query/notes'
 
 interface Props {
     id: string
     title: string
     content: string
+    categoryID: string
     refreshData: () => void
     setEditForm: Dispatch<SetStateAction<boolean>>
 }
 
-const EditNoteForm = ({ id, title, content, refreshData, setEditForm }: Props) => {
+const EditNoteForm = ({ id, title, content, categoryID, refreshData, setEditForm }: Props) => {
 
     const [formTitle, setFormTitle] = useState<string>('')
     const [formContent, setFormContent] = useState<string>('')
+    const { mutate: editNote, isSuccess: isEditSuccess } = useEditNote()
 
     useEffect(() => {
         setFormTitle(title)
@@ -24,29 +27,22 @@ const EditNoteForm = ({ id, title, content, refreshData, setEditForm }: Props) =
         }
     }, [title, content])
 
-    const editNote = (noteId: string) => {
-        try {
-            fetch(`/api/notes/${noteId}`, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                method: 'PUT',
-                body: JSON.stringify({
-                    title: formTitle,
-                    content: formContent
-                })
-            }).then(() => {
-                refreshData()
-                setEditForm(false)
-            })
-        } catch (error) {
-            console.log(error)
+    useEffect(() => {
+        if (isEditSuccess) {
+            refreshData()
+            setEditForm(false)
         }
-    }
+    }, [isEditSuccess])
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        editNote(id)
+        let formData = {
+            id,
+            title: formTitle,
+            content: formContent,
+            categoryID
+        }
+        editNote(formData)
     }
     return (
         <form
