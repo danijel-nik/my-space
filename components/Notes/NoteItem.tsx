@@ -24,7 +24,7 @@ const NoteItem = ({ note }: Props) => {
     return (
         <>
             <div className="w-full lg:w-6/12 xl:w-3/12 p-3">
-                <Paper>
+                <Paper ec="h-[100%] flex flex-col">
                     <div className="text-right">
                         <Tooltip text="View this note">
                             <span
@@ -51,7 +51,7 @@ const NoteItem = ({ note }: Props) => {
                             </span>
                         </Tooltip>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between flex-grow">
                         <div className="flex-1 pr-2 w-full">
                             <h3 className="font-bold">{note.title}</h3>
                             <p className="text-xs mb-3 text-gray-400">
@@ -73,18 +73,23 @@ const NoteItem = ({ note }: Props) => {
                     <div className="text-xs text-right text-gray-400 font-bold">{formatDate(note?.updatedAt)}</div>
                 </Paper>
             </div>
+
             {/* View Note Modal */}
             <Modal
                 open={openViewModal}
                 setOpen={setOpenViewModal}
                 title={note.title}
             >
-                {note.content}
+                <div className="mb-4">{note.content}</div>
+                <div className="text-xs pt-2 border-t border-solid border-slate-200">
+                    <p><strong>Created:</strong> {formatDate(note.createdAt)}</p>
+                    <p><strong>Updated:</strong> {formatDate(note.updatedAt)}</p>
+                </div>
             </Modal>
 
             {/* Edit Note */}
             <EditNoteForm id={note.id} title={note.title} content={note.content} categoryID={note.categoryID} open={openEditForm} setOpen={setOpenEditForm} />
-            
+
             {/* Delete confirmation */}
             <Modal
                 open={openDeleteConfirmation}

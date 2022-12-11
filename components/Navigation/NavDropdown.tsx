@@ -31,7 +31,7 @@ const NavDropdown = ({ title, items }: Props) => {
             <li
                 className="cursor-pointer px-[20px] py-1 font-semibold"
                 onClick={() => setOpen(!open)}
-            >{title}</li>
+            ><Link href={items[0].link}>{title}</Link></li>
             {items?.length > 0 && open && (
                 <ul className="ml-[21px] px-[16px] pt-5 border-l-2">
                     {items.map((item, index) => (
