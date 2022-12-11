@@ -37,13 +37,11 @@ const Home = ({ }: Props) => {
 			</div>
 
 			<NewNoteForm categories={noteCategoriesQuery.data?.categories} open={modalOpen} setOpen={setModalOpen} />
-			
-			<div className="w-auto space-y-6 flex flex-col items-stretch mt-0 md:w-[50%]">
-				<ul>
-					{noteQuery.data?.notes.map((note: Note) => (
-						<NoteItem key={note.id} note={note} refreshData={refreshData} />
-					))}
-				</ul>
+
+			<div className="w-auto flex flex-wrap align-top">
+				{noteQuery.data?.notes.map((note: Note) => (
+					<NoteItem key={note.id} note={note} refreshData={refreshData} />
+				))}
 			</div>
 		</>
 	)

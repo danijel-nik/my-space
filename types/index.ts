@@ -11,3 +11,8 @@ export interface NoteCategory {
     id: string
     name: string
 }
+
+
+export interface NoteWithCategories extends Note {
+    categories?: NoteCategory[]
+}

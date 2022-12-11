@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps: { dehydratedState, ...pageProps } }: AppP
 				<Hydrate state={dehydratedState}>
 					<Header />
 					<Navigation />
-					<div className="pt-[70px] pl-[250px] w-[100%] pr-[20px] pb-[20px]">
+					<div className="pt-[70px] pl-[250px] w-[100%] pr-[20px] pb-[20px] bg-gray-100 min-h-screen">
 						<Component {...pageProps} />
 					</div>
 				</Hydrate>
