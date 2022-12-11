@@ -26,7 +26,7 @@ const EditNoteForm = ({ id, title, content, categoryID, open, setOpen }: Props) 
             setFormTitle('')
             setFormContent('')
         }
-    }, [title, content])
+    }, [title, content, open])
 
     useEffect(() => {
         if (isEditSuccess) {

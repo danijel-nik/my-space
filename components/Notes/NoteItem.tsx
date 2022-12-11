@@ -8,7 +8,7 @@ import Modal from 'components/global/Modal';
 import Button from 'components/global/Button';
 import { formatDate } from 'ustils'
 import Link from 'next/link'
-import { FaEdit, FaTimes } from 'react-icons/fa'
+import { FaEye, FaEdit, FaTimes } from 'react-icons/fa'
 
 interface Props {
     note: NoteWithCategories
@@ -16,6 +16,7 @@ interface Props {
 
 const NoteItem = ({ note }: Props) => {
 
+    const [openViewModal, setOpenViewModal] = useState<boolean>(false)
     const [openEditForm, setOpenEditForm] = useState<boolean>(false)
     const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState<boolean>(false)
     const { mutate: deleteNote } = useDeleteNote()
@@ -25,6 +26,14 @@ const NoteItem = ({ note }: Props) => {
             <div className="w-full lg:w-6/12 xl:w-3/12 p-3">
                 <Paper>
                     <div className="text-right">
+                        <Tooltip text="View this note">
+                            <span
+                                className="text-gray-400 hover:text-gray-600 transition-colors px-1 mr-1 text-sm inline-block cursor-pointer"
+                                onClick={() => setOpenViewModal(true)}
+                            >
+                                <FaEye />
+                            </span>
+                        </Tooltip>
                         <Tooltip text="Edit this note">
                             <span
                                 className="text-gray-400 hover:text-gray-600 transition-colors px-1 mr-1 text-sm inline-block cursor-pointer"
@@ -64,24 +73,36 @@ const NoteItem = ({ note }: Props) => {
                     <div className="text-xs text-right text-gray-400 font-bold">{formatDate(note?.updatedAt)}</div>
                 </Paper>
             </div>
+            {/* View Note Modal */}
+            <Modal
+                open={openViewModal}
+                setOpen={setOpenViewModal}
+                title={note.title}
+            >
+                {note.content}
+            </Modal>
+
+            {/* Edit Note */}
             <EditNoteForm id={note.id} title={note.title} content={note.content} categoryID={note.categoryID} open={openEditForm} setOpen={setOpenEditForm} />
+            
             {/* Delete confirmation */}
             <Modal
-            open={openDeleteConfirmation}
-            setOpen={setOpenDeleteConfirmation}
-            title="Confirmation"
-            btnCancel={true}
-            actions={
-                <>
-                    <Button color="error" onClick={() => deleteNote(note.id)}>
-                        Delete
-                    </Button>
-                </>
-            }
-        >
-            Are you sure you want to delete <strong>{note.title}</strong> note?
-        </Modal>
+                open={openDeleteConfirmation}
+                setOpen={setOpenDeleteConfirmation}
+                title="Confirmation"
+                btnCancel={true}
+                actions={
+                    <>
+                        <Button color="error" onClick={() => deleteNote(note.id)}>
+                            Delete
+                        </Button>
+                    </>
+                }
+            >
+                Are you sure you want to delete <strong>{note.title}</strong> note?
+            </Modal>
         </>
-)}
+    )
+}
 
 export default NoteItem
