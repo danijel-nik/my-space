@@ -4,6 +4,8 @@ import { NoteWithCategories } from 'types';
 import { useDeleteNote } from 'lib-client/react-query/notes'
 import Paper from 'components/global/Paper'
 import Tooltip from 'components/global/Tooltip'
+import Modal from 'components/global/Modal';
+import Button from 'components/global/Button';
 import { formatDate } from 'ustils'
 import Link from 'next/link'
 import { FaEdit, FaTimes } from 'react-icons/fa'
@@ -15,6 +17,7 @@ interface Props {
 const NoteItem = ({ note }: Props) => {
 
     const [openEditForm, setOpenEditForm] = useState<boolean>(false)
+    const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState<boolean>(false)
     const { mutate: deleteNote } = useDeleteNote()
 
     return (
@@ -33,7 +36,7 @@ const NoteItem = ({ note }: Props) => {
                         <Tooltip text="Delete this note">
                             <span
                                 className="text-gray-400 hover:text-gray-600 transition-colors px-1 text-sm inline-block cursor-pointer"
-                                onClick={() => deleteNote(note.id)}
+                                onClick={() => setOpenDeleteConfirmation(true)}
                             >
                                 <FaTimes />
                             </span>
@@ -62,6 +65,22 @@ const NoteItem = ({ note }: Props) => {
                 </Paper>
             </div>
             <EditNoteForm id={note.id} title={note.title} content={note.content} categoryID={note.categoryID} open={openEditForm} setOpen={setOpenEditForm} />
+            {/* Delete confirmation */}
+            <Modal
+            open={openDeleteConfirmation}
+            setOpen={setOpenDeleteConfirmation}
+            title="Confirmation"
+            btnCancel={true}
+            actions={
+                <>
+                    <Button color="error" onClick={() => deleteNote(note.id)}>
+                        Delete
+                    </Button>
+                </>
+            }
+        >
+            Are you sure you want to delete <strong>{note.title}</strong> note?
+        </Modal>
         </>
 )}
 

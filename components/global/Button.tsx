@@ -33,12 +33,13 @@ const Button = ({ type, size, color, className, onClick, children }: Props) => {
     useEffect(() => {
         switch (color) {
             case 'primary': setColorClass('bg-sky-500 active:bg-sky-600')
-            break;
+            break
 
             case 'success': setColorClass('bg-emerald-500 active:bg-emerald-600')
-            break;
+            break
 
             case 'error': setColorClass('bg-red-500 active:bg-red-600')
+            break
 
             default:
                 setColorClass('bg-sky-500 active:bg-sky-600')
