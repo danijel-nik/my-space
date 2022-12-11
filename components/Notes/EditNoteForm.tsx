@@ -1,17 +1,18 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import Button from 'components/global/Button'
 import { useEditNote } from 'lib-client/react-query/notes'
+import Modal from 'components/global/Modal'
 
 interface Props {
     id: string
     title: string
     content: string
     categoryID: string
-    refreshData: () => void
-    setEditForm: Dispatch<SetStateAction<boolean>>
+    open: boolean
+    setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const EditNoteForm = ({ id, title, content, categoryID, refreshData, setEditForm }: Props) => {
+const EditNoteForm = ({ id, title, content, categoryID, open, setOpen }: Props) => {
 
     const [formTitle, setFormTitle] = useState<string>('')
     const [formContent, setFormContent] = useState<string>('')
@@ -29,8 +30,7 @@ const EditNoteForm = ({ id, title, content, categoryID, refreshData, setEditForm
 
     useEffect(() => {
         if (isEditSuccess) {
-            refreshData()
-            setEditForm(false)
+            setOpen(false)
         }
     }, [isEditSuccess])
 
@@ -45,40 +45,37 @@ const EditNoteForm = ({ id, title, content, categoryID, refreshData, setEditForm
         editNote(formData)
     }
     return (
-        <form
-            className="w-auto mx-auto space-y-6 flex flex-col items-stretch mb-20"
-            onSubmit={handleSubmit}
+        <Modal
+            open={open}
+            setOpen={setOpen}
+            title={`Edit Note: ${title}`}
+            btnCancel={true}
+            actions={
+                <>
+                    <Button color="success" onClick={handleSubmit}>
+                        Edit
+                    </Button>
+                </>
+            }
         >
-            <input
-                type="text"
-                placeholder="Title"
-                value={formTitle}
-                onChange={e => setFormTitle(e.target.value)}
-                className="border-2 rounded border-gray-600 p-1"
-            />
+            <form className="w-auto mx-auto space-y-6 flex flex-col items-stretch mb-20">
+                <input
+                    type="text"
+                    placeholder="Title"
+                    value={formTitle}
+                    onChange={e => setFormTitle(e.target.value)}
+                    className="border-2 rounded border-gray-600 p-1"
+                />
 
-            <textarea
-                placeholder="Title"
-                value={formContent}
-                onChange={e => setFormContent(e.target.value)}
-                className="border-2 rounded border-gray-600 p-1"
-            ></textarea>
-
-            <div className="flex flex-row gap-2">
-                <Button
-                    className="flex-grow"
-                    type="submit"
-                >
-                    Edit
-                </Button>
-                <Button
-                    className="flex-grow"
-                    onClick={() => setEditForm(false)}
-                >
-                    Cancel
-                </Button>
-            </div>
-        </form>
+                <textarea
+                    placeholder="Title"
+                    value={formContent}
+                    onChange={e => setFormContent(e.target.value)}
+                    className="border-2 rounded border-gray-600 p-1"
+                    rows={10}
+                ></textarea>
+            </form>
+        </Modal>
     );
 }
 

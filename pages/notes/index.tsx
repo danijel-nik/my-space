@@ -23,6 +23,7 @@ const Home = ({ }: Props) => {
 	const noteQuery = useNotes()
 	const noteCategoriesQuery = useNoteCategories(false)
 
+	// use this if you are using getServerSideProps()
 	const refreshData = () => {
 		router.replace(router.asPath)
 	}
@@ -40,7 +41,7 @@ const Home = ({ }: Props) => {
 
 			<div className="w-auto flex flex-wrap align-top">
 				{noteQuery.data?.notes.map((note: Note) => (
-					<NoteItem key={note.id} note={note} refreshData={refreshData} />
+					<NoteItem key={note.id} note={note} />
 				))}
 			</div>
 		</>
