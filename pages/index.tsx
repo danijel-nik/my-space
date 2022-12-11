@@ -1,6 +1,6 @@
 const HomePage = () => {
     return (
-        <h2>Welcome to My Space App</h2>
+        <h1 className="text-2xl font-bold mb-8">Notes & Stuff Dashboard</h1>
     )
 }
 

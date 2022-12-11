@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import Link from 'next/link'
+import { Routes } from 'lib-client/constants'
 import { NoteCategory } from 'types'
 import {
     useUpdateCategory,
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const NoteCategoryItem = ({ noteCategory }: Props) => {
+    const { SITE } = Routes
     const [edit, setEdit] = useState<boolean>(false)
     const [changed, setChanged] = useState<boolean>(false)
     const [editCategoryName, setEditCategoryName] = useState<string>('')
@@ -44,7 +47,9 @@ const NoteCategoryItem = ({ noteCategory }: Props) => {
                         className="border-2 rounded border-gray-600 p-1"
                     />
                 ) : (
-                    <div className="font-semibold">{noteCategory.name}</div>
+                    <div className="font-semibold">
+                        <Link href={`${SITE.NOTE_CATEGORIES}${noteCategory.id}`}>{noteCategory.name}</Link>
+                    </div>
                 )}
                 <div>
                     <Tooltip text="Edit category">
