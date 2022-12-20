@@ -22,7 +22,7 @@ const NotesView = () => {
 
             <NewNoteForm categories={noteCategoriesQuery.data?.categories} open={modalOpen} setOpen={setModalOpen} />
 
-            <div className="w-auto flex flex-wrap align-top">
+            <div className="w-auto flex flex-wrap align-top justify-between">
                 {noteQuery.data?.notes.map((note: Note) => (
                     <NoteItem key={note.id} note={note} />
                 ))}

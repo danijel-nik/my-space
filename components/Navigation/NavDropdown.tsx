@@ -33,11 +33,11 @@ const NavDropdown = ({ title, items }: Props) => {
                 onClick={() => setOpen(!open)}
             ><Link href={items[0].link}>{title}</Link></li>
             {items?.length > 0 && open && (
-                <ul className="ml-[21px] px-[16px] pt-5 border-l-2">
+                <ul className="ml-[21px] pt-5 border-l">
                     {items.map((item, index) => (
                         <li
                             key={index}
-                            className={`mb-2 hover:text-blue-400 transition-colors ${pathname === item.link ? 'text-blue-400' : ''}`}
+                            className={`mb-2 px-[16px] relative left-[-1px] text-sm hover:text-blue-400 border-l transition-colors ${pathname === item.link ? 'text-blue-400 border-l-blue-400' : ''}`}
                         >
                             <Link href={item.link}>{item.title}</Link>
                         </li>

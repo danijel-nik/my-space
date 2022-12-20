@@ -19,14 +19,14 @@ const Button = ({ type, size, color, className, onClick, children }: Props) => {
             case 'small': setSizeClass('text-xs px-4 py-2')
             break;
 
-            case 'regular': setSizeClass('text-sm px-6 py-3')
+            case 'regular': setSizeClass('text-sm px-4 py-2')
             break;
 
             case 'large': setSizeClass('text-base px-8 py-3')
             break;
 
             default:
-                setSizeClass('text-sm px-6 py-3')
+                setSizeClass('text-sm px-4 py-2')
         }
     }, [size])
 
@@ -48,7 +48,7 @@ const Button = ({ type, size, color, className, onClick, children }: Props) => {
 
     return (
     <button
-        type={type ?? 'button'} 
+        type={type ?? 'button'}
         className={`${colorClass} text-white font-bold uppercase ${sizeClass} rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 ${className ?? ''}`}
         onClick={onClick}
     >

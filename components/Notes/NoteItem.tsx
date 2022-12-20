@@ -23,7 +23,7 @@ const NoteItem = ({ note }: Props) => {
 
     return (
         <>
-            <div className="w-full lg:w-6/12 xl:w-3/12 p-3">
+            <div className="w-full md:w-6/12 xl:w-3/12 py-3 pr-6">
                 <Paper ec="h-[100%] flex flex-col">
                     <div className="text-right">
                         <Tooltip text="View this note">
