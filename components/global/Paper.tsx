@@ -7,7 +7,7 @@ interface Props {
 
 const Paper = ({ children, ec }: Props) => {
     return (
-        <div className={`p-4 rounded shadow-lg bg-white transition-all ${ec}`}>
+        <div className={`p-4 rounded shadow-lg dark:shadow-zinc-700/50 dark:shadow-md bg-white dark:bg-zinc-800 transition-all ${ec}`}>
             {children}
         </div>
     )

@@ -29,7 +29,7 @@ const NoteCategoryItem = ({ noteCategory }: Props) => {
         <>
             <div
                 key={noteCategory.id}
-                className="w-[100%] max-w-xl flex justify-between gap-2 flex-wrap mx-auto mb-2 hover:bg-slate-300 p-1 transition-all items-center"
+                className="w-[100%] max-w-xl flex justify-between gap-2 flex-wrap mx-auto mb-2 hover:bg-slate-300/20 dark:hover:bg-slate-300/10 p-1 transition-all items-center"
             >
                 {edit ? (
                     <input

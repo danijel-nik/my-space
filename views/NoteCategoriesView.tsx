@@ -35,7 +35,7 @@ const NoteCategoriesView = () => {
                     placeholder="Category Name"
                     value={categoryName}
                     onChange={e => setCategoryName(e.target.value)}
-                    className="border-2 rounded border-gray-600 p-1"
+                    className="border-2 rounded border-gray-600 dark:bg-zinc-900 p-1"
                 />
 
                 <Button

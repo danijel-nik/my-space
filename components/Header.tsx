@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import ThemeSwitcher from './global/ThemeSwitcher'
 
 const Header = () => {
 
@@ -14,7 +15,10 @@ const Header = () => {
                     <Link href="/" shallow>Notes & Stuff</Link>
                 </h2>
                 <nav>
-                    <ul className="list-none flex font-semibold">
+                    <ul className="list-none flex font-semibold items-center gap-2">
+                        <li>
+                            <ThemeSwitcher />
+                        </li>
                         <li className={`hover:text-blue-400 transition-colors ${pathname === '/note-categories' ? 'text-blue-400' : ''}`}>
                             <Link href="#" shallow>Username</Link>
                         </li>

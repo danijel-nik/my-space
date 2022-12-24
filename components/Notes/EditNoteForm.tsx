@@ -64,14 +64,14 @@ const EditNoteForm = ({ id, title, content, categoryID, open, setOpen }: Props) 
                     placeholder="Title"
                     value={formTitle}
                     onChange={e => setFormTitle(e.target.value)}
-                    className="border-2 rounded border-gray-600 p-1"
+                    className="border-2 rounded border-gray-600 dark:bg-zinc-800 p-1"
                 />
 
                 <textarea
                     placeholder="Title"
                     value={formContent}
                     onChange={e => setFormContent(e.target.value)}
-                    className="border-2 rounded border-gray-600 p-1"
+                    className="border-2 rounded border-gray-600 dark:bg-zinc-800 p-1"
                     rows={10}
                 ></textarea>
             </form>

@@ -47,7 +47,7 @@ const NewNoteForm = ({ categories, open, setOpen }: Props) => {
                 className="w-[100%] space-y-6 flex flex-col items-stretch"
             >
                 <select
-                    className="border-2 rounded border-gray-600 p-1 cursor-pointer"
+                    className="border-2 rounded border-gray-600 dark:bg-zinc-800 p-1 cursor-pointer"
                     onChange={e => setForm({ ...form, categoryID: e.target.value })}
                     value={form.categoryID}
                 >
@@ -61,14 +61,14 @@ const NewNoteForm = ({ categories, open, setOpen }: Props) => {
                     placeholder="Title"
                     value={form.title}
                     onChange={e => setForm({ ...form, title: e.target.value })}
-                    className="border-2 rounded border-gray-600 p-1"
+                    className="border-2 rounded border-gray-600 dark:bg-zinc-800 p-1"
                 />
 
                 <textarea
                     placeholder="Content"
                     value={form.content}
                     onChange={e => setForm({ ...form, content: e.target.value })}
-                    className="border-2 rounded border-gray-600 p-1"
+                    className="border-2 rounded border-gray-600 dark:bg-zinc-800 p-1"
                     rows={10}
                 ></textarea>
             </div>
