@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import NavDropdown from './NavDropdown'
@@ -40,7 +39,7 @@ const Navigation = () => {
                 ) : (
                     <li key={index} className={`px-[20px] py-1 font-semibold ${pathname === navItem.link ? 'text-blue-400' : ''}`}>
                         <Link
-                            href={navItem.link}>
+                            href={navItem.link || ''}>
                             {navItem.title}
                         </Link>
                     </li>

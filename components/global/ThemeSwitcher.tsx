@@ -1,35 +1,17 @@
-import { useEffect, useState } from 'react'
+import { FC } from 'react'
+import { useTheme } from 'lib-client/providers/ThemeProvider'
 import { FiSun, FiMoon } from 'react-icons/fi'
 
-const ThemeSwitcher = () => {
-    const [theme, setTheme] = useState<string>()
-
-    useEffect(() => {
-        let themeLS = localStorage.getItem('theme')
-        setTheme(themeLS ?? '')
-    }, [])
-
-    useEffect(() => {
-        let htmlEl = document.getElementsByTagName('html')[0]
-        if (theme === 'dark') {
-            htmlEl.classList.add('dark')
-        } else {
-            htmlEl.classList.remove('dark')
-        }
-    }, [theme])
-
-    const switchTheme = (theme: string) => {
-        localStorage.setItem('theme', theme)
-        setTheme(theme)
-    }
+const ThemeSwitcher: FC = () => {
+    const { currentTheme, changeTheme } = useTheme()
 
     return (
         <div className="cursor-pointer">
             {
-                theme === 'dark' ? (
-                    <FiMoon onClick={() => switchTheme('')} />
+                currentTheme === 'dark' ? (
+                    <FiMoon onClick={() => changeTheme?.('')} />
                 ) : (
-                    <FiSun onClick={() => switchTheme('dark')} />
+                    <FiSun onClick={() => changeTheme?.('dark')} />
                 )
             }
         </div>
