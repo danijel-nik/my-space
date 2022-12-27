@@ -14,7 +14,8 @@ const Modal = ({ open, setOpen, title, children, btnCancel, actions }: Props) =>
 
 		open ? (
 			<>
-				<div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-blur-sm">
+				<div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-[9999] outline-none focus:outline-none backdrop-blur-sm">
+					<div className="absolute inset-0" onClick={() => setOpen(false)}></div>
 					<div className="relative w-[100%] my-6 mx-auto max-w-4xl">
 						{/*content*/}
 						<div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white dark:bg-zinc-800 outline-none focus:outline-none">

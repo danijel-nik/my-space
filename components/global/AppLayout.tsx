@@ -15,17 +15,17 @@ const AppLayout: FC<Props> = ({ children }) => {
 
     return (
         <div className={currentTheme === 'dark' ? 'dark' : ''}>
-            <div className="bg-gray-100 antialiased dark:bg-zinc-900 dark:text-white overflow-x-hidden transition-colors">
-                <Suspense fallback={<Loader />}>
-                    <Header mobileNavOpen={mobileNavOpen} setMobileNavOpen={setMobileNavOpen} />
-                    <Navigation mobileNavOpen={mobileNavOpen} setMobileNavOpen={setMobileNavOpen} />
-                    <div className="pt-[70px] lg:ml-[230px] max-w-[100%] px-[20px] pb-[20px] min-h-screen relative">
-                        <BgSquares />
-                        <div className="relative z-[1]">
+            <div className="bg-white antialiased dark:bg-zinc-900 dark:text-white overflow-x-hidden transition-colors">
+                <BgSquares />
+                <div className="relative z-[1]">
+                    <Suspense fallback={<Loader />}>
+                        <Header mobileNavOpen={mobileNavOpen} setMobileNavOpen={setMobileNavOpen} />
+                        <Navigation mobileNavOpen={mobileNavOpen} setMobileNavOpen={setMobileNavOpen} />
+                        <div className="pt-[70px] lg:ml-[230px] max-w-[100%] px-[20px] pb-[20px] min-h-screen">
                             {children}
                         </div>
-                    </div>
-                </Suspense>
+                    </Suspense>
+                </div>
             </div>
         </div>
     )
