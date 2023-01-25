@@ -1,9 +1,10 @@
-import { FC, Dispatch, SetStateAction } from 'react'
+import { FC, Dispatch, SetStateAction, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import ThemeSwitcher from './global/ThemeSwitcher'
 import { IoIosClose } from 'react-icons/io'
 import { FiMenu } from 'react-icons/fi'
+import { useSession, signOut } from 'next-auth/react'
 
 type Props = {
     mobileNavOpen: boolean
@@ -14,6 +15,11 @@ const Header: FC<Props> = ({ mobileNavOpen, setMobileNavOpen }) => {
 
     const router = useRouter()
     const { pathname } = router
+    const { data: session } = useSession()
+
+    useEffect(() => {
+        console.log(session)
+    }, [])
 
     return (
         <div className={`fixed top-0 left-0 lg:left-[230px] right-0 py-3 backdrop-blur-sm bg-white${mobileNavOpen ? '' : '/50'} lg:bg-white/50 text-zinc-900 dark:bg-zinc-900${mobileNavOpen ? '' : '/50'} lg:dark:bg-zinc-900/50 dark:text-white border-b border-zinc-900/10 dark:border-white/10 z-[2]`}>
@@ -28,12 +34,15 @@ const Header: FC<Props> = ({ mobileNavOpen, setMobileNavOpen }) => {
                     <Link href="/" shallow>Notes & Stuff</Link>
                 </h2>
                 <nav>
-                    <ul className="list-none flex font-semibold items-center gap-2">
+                    <ul className="list-none flex font-semibold items-center gap-3">
                         <li>
                             <ThemeSwitcher />
                         </li>
                         <li className={`hover:text-blue-400 transition-colors ${pathname === '/note-categories' ? 'text-blue-400' : ''}`}>
-                            <Link href="#" shallow>Username</Link>
+                            <Link href="#" shallow>{session?.user?.name}</Link>
+                        </li>
+                        <li>
+                            <Link className="hover:text-blue-400 transition-colors" href="#" onClick={() => signOut()} shallow>Sign Out</Link>
                         </li>
                     </ul>
                 </nav>

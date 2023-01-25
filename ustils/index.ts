@@ -16,3 +16,5 @@ export const formatDate = (date: string | undefined) => {
         return '-'
     }
 }
+
+export const isBrowser = () => typeof window !== 'undefined'
